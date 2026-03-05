@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/ build/
+.venv/ venv/ .env
+.ipynb_checkpoints/
+outputs/
+!outputs/.gitkeep
+*.h5ad
+data/raw/
+.coverage coverage.xml htmlcov/
+.pytest_cache/ .ruff_cache/
+.vscode/ .idea/
+*.log logs/
+.DS_Store
