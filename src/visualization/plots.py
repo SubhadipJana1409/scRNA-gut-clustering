@@ -10,8 +10,6 @@ import logging
 from pathlib import Path
 
 import anndata as ad
-import matplotlib
-import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -71,7 +69,9 @@ def plot_qc_violin(adata: ad.AnnData, out_dir: Path) -> None:
         ax.violinplot(data, showmedians=True, showextrema=True)
         ax.scatter(np.ones(len(data)) + np.random.normal(0, 0.02, len(data)),
                    data, alpha=0.15, s=2, color=ACC)
-        ax.set_ylabel(label); ax.set_xticks([]); ax.grid(axis="y", alpha=0.3)
+        ax.set_ylabel(label)
+        ax.set_xticks([])
+        ax.grid(axis="y", alpha=0.3)
         ax.set_title(f"Median: {np.median(data):.0f}")
 
     plt.tight_layout()
@@ -91,16 +91,21 @@ def plot_pca_variance(adata: ad.AnnData, out_dir: Path) -> None:
     # Elbow plot
     pcs = np.arange(1, n_show + 1)
     axes[0].plot(pcs, var_ratio[:n_show] * 100, "o-", color=ACC, lw=2, ms=5)
-    axes[0].set_xlabel("Principal Component"); axes[0].set_ylabel("Variance Explained (%)")
-    axes[0].set_title("Scree Plot"); axes[0].grid(True, alpha=0.3)
+    axes[0].set_xlabel("Principal Component")
+    axes[0].set_ylabel("Variance Explained (%)")
+    axes[0].set_title("Scree Plot")
+    axes[0].grid(True, alpha=0.3)
 
     # Cumulative variance
     cumvar = np.cumsum(var_ratio[:n_show]) * 100
     axes[1].plot(pcs, cumvar, "s-", color="#e74c3c", lw=2, ms=5)
     axes[1].axhline(80, color="#7c6af7", linestyle="--", lw=1.5, label="80%")
     axes[1].axhline(90, color="#2ecc71", linestyle="--", lw=1.5, label="90%")
-    axes[1].set_xlabel("Principal Component"); axes[1].set_ylabel("Cumulative Variance (%)")
-    axes[1].set_title("Cumulative Variance"); axes[1].legend(); axes[1].grid(True, alpha=0.3)
+    axes[1].set_xlabel("Principal Component")
+    axes[1].set_ylabel("Cumulative Variance (%)")
+    axes[1].set_title("Cumulative Variance")
+    axes[1].legend()
+    axes[1].grid(True, alpha=0.3)
 
     plt.tight_layout()
     _save(fig, out_dir / "fig2_pca_variance.png")
@@ -109,7 +114,7 @@ def plot_pca_variance(adata: ad.AnnData, out_dir: Path) -> None:
 # ──────────────────────────────────────────────────────────────────────────────
 def plot_pca_scatter(adata: ad.AnnData, out_dir: Path) -> None:
     """Fig 3 — PCA scatter coloured by cell type and compartment."""
-    from ..data.markers import CELL_TYPE_COLORS, COMPARTMENTS
+    from ..data.markers import CELL_TYPE_COLORS
 
     fig, axes = plt.subplots(1, 2, figsize=(16, 6))
     fig.patch.set_facecolor(BG)
@@ -125,8 +130,10 @@ def plot_pca_scatter(adata: ad.AnnData, out_dir: Path) -> None:
             color = CELL_TYPE_COLORS.get(ct, "#aaaaaa")
             axes[0].scatter(X_pca[mask, 0], X_pca[mask, 1],
                             c=color, s=4, alpha=0.5, label=ct, rasterized=True)
-        axes[0].set_xlabel("PC1"); axes[0].set_ylabel("PC2")
-        axes[0].set_title("Cell Types"); axes[0].legend(
+        axes[0].set_xlabel("PC1")
+        axes[0].set_ylabel("PC2")
+        axes[0].set_title("Cell Types")
+        axes[0].legend(
             markerscale=3, fontsize=6, loc="upper right",
             ncol=2, framealpha=0.5)
 
@@ -137,8 +144,10 @@ def plot_pca_scatter(adata: ad.AnnData, out_dir: Path) -> None:
             mask = adata.obs["compartment"] == comp
             axes[1].scatter(X_pca[mask, 0], X_pca[mask, 1],
                             c=comp_colors.get(comp, "#aaaaaa"), s=4, alpha=0.5, label=comp, rasterized=True)
-        axes[1].set_xlabel("PC1"); axes[1].set_ylabel("PC2")
-        axes[1].set_title("Compartment"); axes[1].legend(markerscale=3, fontsize=9)
+        axes[1].set_xlabel("PC1")
+        axes[1].set_ylabel("PC2")
+        axes[1].set_title("Compartment")
+        axes[1].legend(markerscale=3, fontsize=9)
 
     plt.tight_layout()
     _save(fig, out_dir / "fig3_pca_scatter.png")
@@ -163,7 +172,9 @@ def plot_umap(adata: ad.AnnData, out_dir: Path) -> None:
         axes[0].scatter(X_umap[mask, 0], X_umap[mask, 1],
                         c=[palette[i % len(palette)]], s=4, alpha=0.6,
                         label=f"C{cl}", rasterized=True)
-    axes[0].set_title("Leiden Clusters"); axes[0].set_xlabel("UMAP 1"); axes[0].set_ylabel("UMAP 2")
+    axes[0].set_title("Leiden Clusters")
+    axes[0].set_xlabel("UMAP 1")
+    axes[0].set_ylabel("UMAP 2")
     axes[0].legend(markerscale=3, fontsize=7, ncol=3, loc="upper right", framealpha=0.4)
 
     # Panel B: True cell types
@@ -173,7 +184,9 @@ def plot_umap(adata: ad.AnnData, out_dir: Path) -> None:
             color = CELL_TYPE_COLORS.get(ct, "#aaaaaa")
             axes[1].scatter(X_umap[mask, 0], X_umap[mask, 1],
                             c=color, s=4, alpha=0.6, label=ct, rasterized=True)
-        axes[1].set_title("True Cell Types"); axes[1].set_xlabel("UMAP 1"); axes[1].set_ylabel("")
+        axes[1].set_title("True Cell Types")
+        axes[1].set_xlabel("UMAP 1")
+        axes[1].set_ylabel("")
         axes[1].legend(markerscale=3, fontsize=6, ncol=2, loc="upper right", framealpha=0.4)
     else:
         axes[1].set_visible(False)
@@ -189,9 +202,12 @@ def plot_umap(adata: ad.AnnData, out_dir: Path) -> None:
         sc2 = axes[2].scatter(X_umap[:, 0], X_umap[:, 1], c=expr,
                                cmap="YlOrRd", s=4, alpha=0.7, rasterized=True)
         plt.colorbar(sc2, ax=axes[2], label="log1p Expression")
-        axes[2].set_title(f"{marker_gene} Expression"); axes[2].set_xlabel("UMAP 1"); axes[2].set_ylabel("")
+        axes[2].set_title(f"{marker_gene} Expression")
+        axes[2].set_xlabel("UMAP 1")
+        axes[2].set_ylabel("")
     else:
-        axes[2].set_title("No FABP1 in panel"); axes[2].set_visible(False)
+        axes[2].set_title("No FABP1 in panel")
+        axes[2].set_visible(False)
 
     plt.tight_layout()
     _save(fig, out_dir / "fig4_umap.png")
@@ -200,7 +216,6 @@ def plot_umap(adata: ad.AnnData, out_dir: Path) -> None:
 # ──────────────────────────────────────────────────────────────────────────────
 def plot_umap_markers(adata: ad.AnnData, out_dir: Path) -> None:
     """Fig 5 — UMAP multi-panel: expression of 8 canonical gut markers."""
-    from ..data.markers import CELL_TYPES
 
     key_markers = ["LGR5", "MKI67", "FABP1", "MUC2", "CHGA", "CD3D", "CD68", "COL1A1"]
     available   = [g for g in key_markers if g in adata.var_names][:8]
@@ -209,7 +224,8 @@ def plot_umap_markers(adata: ad.AnnData, out_dir: Path) -> None:
         logger.warning("No key markers found in data — skipping fig5")
         return
 
-    ncols = 4; nrows = (n + 3) // 4
+    ncols = 4
+    nrows = (n + 3) // 4
     fig, axes = plt.subplots(nrows, ncols, figsize=(5 * ncols, 4.5 * nrows))
     fig.patch.set_facecolor(BG)
     fig.suptitle("Canonical Gut Marker Gene Expression on UMAP", fontsize=14, fontweight="bold")
@@ -222,7 +238,9 @@ def plot_umap_markers(adata: ad.AnnData, out_dir: Path) -> None:
         sc2  = ax.scatter(X_umap[:, 0], X_umap[:, 1], c=expr,
                           cmap="YlOrRd", s=3, alpha=0.6, vmin=0, rasterized=True)
         plt.colorbar(sc2, ax=ax, shrink=0.8)
-        ax.set_title(f"*{gene}*", style="italic"); ax.set_xticks([]); ax.set_yticks([])
+        ax.set_title(f"*{gene}*", style="italic")
+        ax.set_xticks([])
+        ax.set_yticks([])
         ax.set_facecolor(AX)
 
     for ax in list(axes_flat)[n:]:
@@ -254,10 +272,12 @@ def plot_cluster_composition(adata: ad.AnnData, out_dir: Path) -> None:
                edgecolor=BG, linewidth=0.5)
         bottom += values
 
-    ax.set_xlabel("Leiden Cluster"); ax.set_ylabel("Cell Type Fraction (%)")
+    ax.set_xlabel("Leiden Cluster")
+    ax.set_ylabel("Cell Type Fraction (%)")
     ax.set_title("Cell Type Composition per Leiden Cluster", fontsize=13, fontweight="bold")
     ax.legend(bbox_to_anchor=(1.02, 1), loc="upper left", fontsize=8, framealpha=0.7)
-    ax.set_ylim(0, 105); ax.grid(axis="y", alpha=0.25)
+    ax.set_ylim(0, 105)
+    ax.grid(axis="y", alpha=0.25)
 
     plt.tight_layout()
     _save(fig, out_dir / "fig6_cluster_composition.png")
@@ -298,7 +318,8 @@ def plot_marker_heatmap(adata: ad.AnnData, out_dir: Path) -> None:
     sns.heatmap(df, cmap="YlOrRd", ax=ax, linewidths=0.3, linecolor=BG,
                 cbar_kws={"label": "Mean log1p expression"},
                 xticklabels=True, yticklabels=True)
-    ax.set_xlabel("Gene"); ax.set_ylabel("Leiden Cluster")
+    ax.set_xlabel("Gene")
+    ax.set_ylabel("Leiden Cluster")
     ax.set_title("Top Marker Genes per Cluster", fontsize=13, fontweight="bold")
     ax.tick_params(axis="x", rotation=90, labelsize=7)
     ax.tick_params(axis="y", rotation=0, labelsize=8)
@@ -329,7 +350,9 @@ def plot_cell_annotation_umap(adata: ad.AnnData, out_dir: Path) -> None:
         axes[0].text(cx, cy, cl, fontsize=8, ha="center", va="center", color="white",
                      fontweight="bold",
                      bbox=dict(boxstyle="round,pad=0.2", fc=pal[i % len(pal)], alpha=0.7))
-    axes[0].set_title("Leiden Clusters", fontsize=12); axes[0].set_xlabel("UMAP 1"); axes[0].set_ylabel("UMAP 2")
+    axes[0].set_title("Leiden Clusters", fontsize=12)
+    axes[0].set_xlabel("UMAP 1")
+    axes[0].set_ylabel("UMAP 2")
 
     # Predicted cell types
     if "predicted_cell_type" in adata.obs.columns:
@@ -339,7 +362,9 @@ def plot_cell_annotation_umap(adata: ad.AnnData, out_dir: Path) -> None:
             color = CELL_TYPE_COLORS.get(ct, "#aaaaaa")
             axes[1].scatter(X_umap[mask, 0], X_umap[mask, 1],
                             c=color, s=5, alpha=0.6, label=ct, rasterized=True)
-        axes[1].set_title("Predicted Cell Types", fontsize=12); axes[1].set_xlabel("UMAP 1"); axes[1].set_ylabel("")
+        axes[1].set_title("Predicted Cell Types", fontsize=12)
+        axes[1].set_xlabel("UMAP 1")
+        axes[1].set_ylabel("")
         axes[1].legend(markerscale=3, fontsize=7, ncol=2, loc="upper right", framealpha=0.5)
     else:
         axes[1].set_visible(False)
@@ -368,7 +393,8 @@ def plot_compartment_summary(adata: ad.AnnData, out_dir: Path) -> None:
             wedgeprops=dict(edgecolor=BG, linewidth=1.5),
             textprops={"color": TEXT, "fontsize": 7},
         )
-        for at in autotexts: at.set_fontsize(6)
+        for at in autotexts:
+            at.set_fontsize(6)
         axes[0].set_title("By Cell Type", fontsize=11)
 
     # Compartment pie

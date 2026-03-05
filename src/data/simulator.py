@@ -18,10 +18,8 @@ from __future__ import annotations
 import logging
 
 import numpy as np
-import pandas as pd
-from scipy.sparse import csr_matrix
 
-from .markers import CELL_TYPES, CELL_TYPE_PROPORTIONS, ALL_MARKER_GENES
+from .markers import ALL_MARKER_GENES, CELL_TYPE_PROPORTIONS, CELL_TYPES
 
 logger = logging.getLogger(__name__)
 

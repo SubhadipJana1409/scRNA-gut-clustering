@@ -18,22 +18,33 @@ from __future__ import annotations
 
 import argparse
 import logging
-import sys
 from pathlib import Path
 
 import anndata as ad
-import scanpy as sc
 
-from src.data       import load_simulated, load_10x_cellranger, load_h5ad
-from src.models     import (run_qc, preprocess, build_neighbors_and_umap,
-                             cluster, annotate_cell_types, run_marker_genes)
-from src.visualization import (
-    set_style, plot_qc_violin, plot_pca_variance, plot_pca_scatter,
-    plot_umap, plot_umap_markers, plot_cluster_composition,
-    plot_marker_heatmap, plot_cell_annotation_umap, plot_compartment_summary,
+from src.data import load_10x_cellranger, load_h5ad, load_simulated
+from src.models import (
+    annotate_cell_types,
+    build_neighbors_and_umap,
+    cluster,
+    preprocess,
+    run_marker_genes,
+    run_qc,
 )
+from src.models.model_io import save_models
 from src.utils import load_config, setup_logging
-from src.models.model_io import save_models, load_models
+from src.visualization import (
+    plot_cell_annotation_umap,
+    plot_cluster_composition,
+    plot_compartment_summary,
+    plot_marker_heatmap,
+    plot_pca_scatter,
+    plot_pca_variance,
+    plot_qc_violin,
+    plot_umap,
+    plot_umap_markers,
+    set_style,
+)
 
 logger = logging.getLogger(__name__)
 

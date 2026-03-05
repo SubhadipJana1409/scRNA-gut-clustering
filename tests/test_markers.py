@@ -1,8 +1,10 @@
 """Tests for marker gene definitions."""
-import pytest
 from src.data.markers import (
-    CELL_TYPES, CELL_TYPE_PROPORTIONS, ALL_MARKER_GENES,
-    CELL_TYPE_COLORS, COMPARTMENTS
+    ALL_MARKER_GENES,
+    CELL_TYPE_COLORS,
+    CELL_TYPE_PROPORTIONS,
+    CELL_TYPES,
+    COMPARTMENTS,
 )
 
 

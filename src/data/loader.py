@@ -13,13 +13,12 @@ import logging
 from pathlib import Path
 
 import anndata as ad
-import numpy as np
 import pandas as pd
 import scanpy as sc
 from scipy.sparse import csr_matrix
 
-from .simulator import simulate_counts, MITO_GENES
-from .markers import CELL_TYPES, ALL_MARKER_GENES
+from .markers import ALL_MARKER_GENES
+from .simulator import MITO_GENES, simulate_counts
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +58,7 @@ def load_simulated(
     obs = pd.DataFrame(
         {
             "cell_type":   cell_labels,
-            "compartment": [compartment_map.get(l, "Unknown") for l in cell_labels],
+            "compartment": [compartment_map.get(lbl, "Unknown") for lbl in cell_labels],
         },
         index=cell_ids,
     )

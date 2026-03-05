@@ -1,10 +1,9 @@
 """Tests for the scRNA-seq processing pipeline."""
-import numpy as np
-import pytest
 import anndata as ad
-from scipy.sparse import csr_matrix
+import pytest
+
 from src.data import load_simulated
-from src.models.pipeline import run_qc, preprocess, cluster, annotate_cell_types
+from src.models.pipeline import annotate_cell_types, cluster, preprocess, run_qc
 
 
 @pytest.fixture(scope="module")
@@ -120,6 +119,7 @@ class TestAnnotation:
 
     def test_predicted_types_are_known(self, tiny_adata, minimal_cfg):
         import scanpy as sc
+
         from src.data.markers import CELL_TYPES
         adata = run_qc(tiny_adata.copy(), minimal_cfg)
         adata = preprocess(adata, minimal_cfg)

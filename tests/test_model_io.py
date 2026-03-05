@@ -1,19 +1,18 @@
 """Tests for model save / load / predict."""
 import json
+
 import numpy as np
 import pytest
-from pathlib import Path
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
 
 
 @pytest.fixture(scope="module")
 def trained_artefacts(tmp_path_factory):
     """Run a tiny pipeline and save models."""
     import scanpy as sc
+
     from src.data import load_simulated
-    from src.models.pipeline import run_qc, preprocess, build_neighbors_and_umap, cluster
     from src.models.model_io import save_models
+    from src.models.pipeline import cluster, preprocess, run_qc
 
     cfg = {
         "qc": {"min_genes_per_cell": 3, "max_genes_per_cell": 10000,
@@ -95,8 +94,8 @@ class TestLoadModels:
 
 class TestPredictNewCells:
     def test_predict_returns_array(self, trained_artefacts):
-        from src.models.model_io import load_models, predict_new_cells
         from src.data import build_gene_panel
+        from src.models.model_io import load_models, predict_new_cells
         out_dir, *_ = trained_artefacts
         artefacts  = load_models(out_dir / "models")
         gene_names = build_gene_panel(120)
@@ -105,12 +104,12 @@ class TestPredictNewCells:
         assert labels.shape == (10,)
 
     def test_labels_within_range(self, trained_artefacts):
-        from src.models.model_io import load_models, predict_new_cells
         from src.data import build_gene_panel
+        from src.models.model_io import load_models, predict_new_cells
         out_dir, _, _, _, _ = trained_artefacts
         artefacts  = load_models(out_dir / "models")
         gene_names = build_gene_panel(120)
         new_counts = np.random.randint(0, 10, size=(20, 120)).astype(np.float32)
         labels = predict_new_cells(new_counts, gene_names, artefacts)
         k = artefacts["kmeans"].n_clusters
-        assert all(0 <= l < k for l in labels)
+        assert all(0 <= lbl < k for lbl in labels)

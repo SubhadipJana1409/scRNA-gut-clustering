@@ -1,7 +1,8 @@
 """Tests for scRNA-seq count simulator."""
 import numpy as np
 import pytest
-from src.data.simulator import simulate_counts, build_gene_panel
+
+from src.data.simulator import build_gene_panel, simulate_counts
 
 
 class TestBuildGenePanel:
@@ -44,7 +45,6 @@ class TestSimulateCounts:
 
     def test_all_cell_types_present(self, small_data):
         _, _, _, labels = small_data
-        from src.data.markers import CELL_TYPES
         present = set(labels)
         # Most cell types should appear (some rare ones may be absent in 200 cells)
         assert len(present) >= 5

@@ -19,13 +19,12 @@ from __future__ import annotations
 import logging
 
 import anndata as ad
-import numpy as np
 import pandas as pd
 import scanpy as sc
 from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score, silhouette_score
 
-from ..data.markers import CELL_TYPES, CELL_TYPE_COLORS
+from ..data.markers import CELL_TYPES
 
 logger = logging.getLogger(__name__)
 sc.settings.verbosity = 1

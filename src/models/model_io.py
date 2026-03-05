@@ -181,7 +181,6 @@ def predict_new_cells(
     that were used during training. The counts must cover the HVG gene
     set used during training (missing genes are zero-filled).
     """
-    import warnings
     hvg_list = artefacts["hvg_list"]
     pca      = artefacts["pca"]
     kmeans   = artefacts["kmeans"]
@@ -224,7 +223,7 @@ def _build_model_card(meta: dict, kmeans: KMeans, pca: PCA) -> str:
     )
     return f"""# Model Card — scRNA-seq Gut Cell Clustering
 
-**Saved:** {meta["saved_at"]}  
+**Saved:** {meta["saved_at"]}
 **Data source:** {meta["data_source"]}
 
 ---
