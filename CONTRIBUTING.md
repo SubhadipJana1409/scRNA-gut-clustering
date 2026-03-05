@@ -5,8 +5,8 @@ Thanks for your interest in contributing!
 ## Setup
 
 ```bash
-git clone https://github.com/SubhadipJana1409/day20-scrna-gut-clustering
-cd day20-scrna-gut-clustering
+git clone https://github.com/SubhadipJana1409/scRNA-gut-clustering
+cd scRNA-gut-clustering
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```

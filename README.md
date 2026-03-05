@@ -214,7 +214,7 @@ scRNA-seq counts follow a negative binomial (NB) distribution due to over-disper
 ## Project Structure
 
 ```
-day20-scrna-gut-clustering/
+scRNA-gut-clustering/
 │
 ├── 📄 README.md
 ├── 📄 LICENSE (MIT)
