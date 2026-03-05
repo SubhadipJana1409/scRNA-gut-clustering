@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python)
 ![Scanpy](https://img.shields.io/badge/Scanpy-1.9%2B-orange?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-![CI](https://img.shields.io/github/actions/workflow/status/SubhadipJana1409/day20-scrna-gut-clustering/ci.yml?style=flat-square&label=CI)
+![CI](https://img.shields.io/github/actions/workflow/status/SubhadipJana1409/scRNA-gut-clustering/ci.yml?style=flat-square&label=CI)
 ![30Days](https://img.shields.io/badge/%2330DaysOfBioinformatics-Day%2020%2F30-7c6af7?style=flat-square)
 
 **Cluster gut mucosal cells from scRNA-seq data using PCA + KNN + Leiden + UMAP,  
@@ -95,8 +95,8 @@ Save AnnData ──────────────────────�
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/SubhadipJana1409/day20-scrna-gut-clustering
-cd day20-scrna-gut-clustering
+git clone https://github.com/SubhadipJana1409/scRNA-gut-clustering
+cd scRNA-gut-clustering
 
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
